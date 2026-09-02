@@ -74,6 +74,11 @@ pub fn build(b: *std.Build) void {
             .name = name,
             .root_module = exe_mod,
         });
+        if (target.result.os.tag == .windows) {
+            // flecs includes a web based explorer which brings it's own http server.
+            // On windows this requires windows sockets and therefore ws2_32.
+            exe.root_module.linkSystemLibrary("ws2_32", .{});
+        }
         b.installArtifact(exe);
         examples_step.dependOn(&exe.step);
 
