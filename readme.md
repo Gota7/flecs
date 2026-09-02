@@ -59,6 +59,9 @@ const flecs = b.dependency("flecs", .{
     .target = target,
     .optimize = optimize,
 });
+if (target.result.os.tag == .windows) {
+    exe.root_module.linkSystemLibrary("ws2_32", .{});
+}
 exe.root_module.addImport("flecs", flecs.module("flecs"));
 ```
 
