@@ -655,7 +655,7 @@ pub fn World(comptime world_cfg: anytype) type {
                 c.ecs_add_id(self.raw, cid, cid);
             } else {
                 var v = value;
-                _ = c.ecs_set_id(self.raw, cid, cid, @sizeOf(T), &v);
+                _ = c.ecs_set_id(self.raw, cid, cid, @sizeOf(T), @ptrCast(@alignCast(&v)));
             }
         }
 
